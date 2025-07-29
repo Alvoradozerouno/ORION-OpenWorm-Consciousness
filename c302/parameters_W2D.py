@@ -38,6 +38,9 @@ class ParameterisedModel(c302ModelPrototype):
         self.add_bioparameter(
             "neuron_to_muscle_elec_syn_gbase", "1 nS", "BlindGuess", "0.1"
         )
+        self.add_bioparameter(
+            "muscle_to_muscle_elec_syn_gbase", "1 nS", "BlindGuess", "0.1"
+        )
 
         self.add_bioparameter(
             "unphysiological_offset_current", "0 pA", "KnownError", "0"
@@ -87,6 +90,14 @@ class ParameterisedModel(c302ModelPrototype):
             conductance=self.get_bioparameter("neuron_to_muscle_elec_syn_gbase").value,
         )
 
+    def create_muscle_to_muscle_syn(self):
+        self.muscle_to_muscle_exc_syn = OutputSynapse(id="muscle_to_muscle_w2d")
+
+        self.muscle_to_muscle_elec_syn = GapJunction(
+            id="muscle_to_muscle_elec_syn",
+            conductance=self.get_bioparameter("muscle_to_muscle_elec_syn_gbase").value,
+        )
+
     def get_elec_syn(self, pre_cell, post_cell, type):
         if type == "neuron_to_neuron":
             gbase = self.get_bioparameter("neuron_to_neuron_elec_syn_gbase").value
@@ -95,6 +106,11 @@ class ParameterisedModel(c302ModelPrototype):
         elif type == "neuron_to_muscle":
             gbase = self.get_bioparameter("neuron_to_muscle_elec_syn_gbase").value
             conn_id = "neuron_to_muscle_elec_syn"
+        elif type == "muscle_to_muscle":
+            gbase = self.get_bioparameter("muscle_to_muscle_elec_syn_gbase").value
+            conn_id = "muscle_to_muscle_elec_syn"
+        else:
+            raise ValueError("Unknown electrical connection type: %s" % type)
 
         return GapJunction(id=conn_id, conductance=gbase)
 

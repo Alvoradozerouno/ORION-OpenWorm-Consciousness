@@ -1163,6 +1163,7 @@ def generate(
 
             elect_conn = False
             analog_conn = False
+            nonneuroml_conn = False
 
             conn_type = "neuron_to_neuron"
             conn_pol = "exc"
@@ -1275,6 +1276,11 @@ def generate(
                 if len(nml_doc.silent_synapses) == 0:
                     nml_doc.silent_synapses.append(SilentSynapse(id="silent"))
 
+            if params.is_nonneuroml_conn(syn0):
+                nonneuroml_conn = True
+                if len(nml_doc.silent_synapses) == 0:
+                    nml_doc.silent_synapses.append(SilentSynapse(id="silent"))
+
             number_syns = conn.number
 
             if params.get_bioparameter(
@@ -1317,10 +1323,23 @@ def generate(
                 print "%s %s num:%s" % (conn_shorthand, orig_pol, number_syns)"""
 
             if number_syns != conn.number:
+                print_(
+                    ">> Changing number of effective synapses connection %s -> %s: was: %s, becomes %s (analog: %s, elect: %s)"
+                    % (
+                        conn.pre_cell,
+                        conn.post_cell,
+                        conn.number,
+                        number_syns,
+                        analog_conn,
+                        elect_conn,
+                    )
+                )
                 if analog_conn or elect_conn:
                     magnitude, unit = c302.bioparameters.split_neuroml_quantity(
                         syn0.conductance
                     )
+                elif nonneuroml_conn:
+                    magnitude, unit = 1, None
                 else:
                     magnitude, unit = c302.bioparameters.split_neuroml_quantity(
                         syn0.gbase
@@ -1379,7 +1398,7 @@ def generate(
 
                 proj0.electrical_connection_instance_ws.append(conn0)
 
-            elif analog_conn:
+            elif analog_conn or nonneuroml_conn:
                 proj0 = ContinuousProjection(
                     id=proj_id,
                     presynaptic_population=conn.pre_cell,
@@ -1444,6 +1463,7 @@ def generate(
 
             elect_conn = False
             analog_conn = False
+            nonneuroml_conn = False
 
             conn_type = "neuron_to_muscle"
             if conn.pre_cell in muscles_to_include:
@@ -1558,6 +1578,11 @@ def generate(
                 if len(nml_doc.silent_synapses) == 0:
                     nml_doc.silent_synapses.append(SilentSynapse(id="silent"))
 
+            if params.is_nonneuroml_conn(syn0):
+                nonneuroml_conn = True
+                if len(nml_doc.silent_synapses) == 0:
+                    nml_doc.silent_synapses.append(SilentSynapse(id="silent"))
+
             number_syns = conn.number
 
             if params.get_bioparameter(
@@ -1600,6 +1625,8 @@ def generate(
                     magnitude, unit = c302.bioparameters.split_neuroml_quantity(
                         syn0.conductance
                     )
+                elif nonneuroml_conn:
+                    magnitude, unit = 1, None
                 else:
                     magnitude, unit = c302.bioparameters.split_neuroml_quantity(
                         syn0.gbase
@@ -1653,7 +1680,7 @@ def generate(
 
                 proj0.electrical_connection_instance_ws.append(conn0)
 
-            elif analog_conn:
+            elif analog_conn or nonneuroml_conn:
                 proj0 = ContinuousProjection(
                     id=proj_id,
                     presynaptic_population=conn.pre_cell,
