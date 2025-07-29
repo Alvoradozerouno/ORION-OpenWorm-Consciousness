@@ -33,7 +33,6 @@ import random
 import argparse
 import shutil
 import os
-import logging
 import importlib
 import math
 from lxml import etree
@@ -64,14 +63,13 @@ except Exception:
 
 from cect.Cells import BODY_WALL_MUSCLE_NAMES
 
-DEFAULT_DATA_READER = "SpreadsheetDataReader"
+# DEFAULT_DATA_READER = "SpreadsheetDataReader"
 #
 # DEFAULT_DATA_READER = "cect.White_whole"
 # DEFAULT_DATA_READER = "cect.Cook2019HermReader"
 DEFAULT_DATA_READER = "cect.SpreadsheetDataReader"
 FW_DATA_READER = "cect.UpdatedSpreadsheetDataReader2"
 
-logging.basicConfig()
 
 here = os.path.abspath(os.path.dirname(__file__))
 about = {}
