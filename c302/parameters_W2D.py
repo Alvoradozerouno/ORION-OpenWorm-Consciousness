@@ -10,11 +10,11 @@ ASSESSMENT:
 
 """
 
-from neuroml import PulseGenerator
-
-from neuroml import GapJunction
-
 from c302.bioparameters import c302ModelPrototype
+from c302.bioparameters import NonNeuroMLCustomType
+
+from neuroml import PulseGenerator
+from neuroml import GapJunction
 
 
 class ParameterisedModel(c302ModelPrototype):
@@ -105,7 +105,6 @@ class ParameterisedModel(c302ModelPrototype):
         return self.neuron_to_neuron_inh_syn
 
 
-from c302.bioparameters import NonNeuroMLCustomType
 
 
 class CellW2D(NonNeuroMLCustomType):

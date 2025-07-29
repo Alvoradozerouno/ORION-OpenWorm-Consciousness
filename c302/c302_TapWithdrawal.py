@@ -10,7 +10,8 @@ import importlib
 
 import neuroml.writers as writers
 
-range_incl = lambda start, end: range(start, end + 1)
+def range_incl(start, end):
+    return range(start, end + 1)
 
 
 def setup(
