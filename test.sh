@@ -17,6 +17,12 @@ python -m c302.OpenWormReader
 ##   (Re)generate NeuroML 2 & LEMS files from the python scripts
 
 python -m c302.c302_IClamp W2D
+python -m c302.c302_Syns W2D
+python -m c302.c302_Social W2D
+python -m c302.c302_Pharyngeal W2D
+python -m c302.c302_Full W2D
+python -m c302.c302_Muscles W2D
+python -m c302.c302_Oscillator W2D
 
 
 python -m c302.c302_IClamp A
