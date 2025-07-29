@@ -1,6 +1,7 @@
 set -ex
 
-ruff format *.py */*.py */*/*.py
+ruff format *.py c302/*.py examples/*/*.py
+ruff check  *.py c302/*.py examples/*/*.py
 
 pip install .
 

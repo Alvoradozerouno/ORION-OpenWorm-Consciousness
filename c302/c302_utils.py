@@ -8,7 +8,10 @@ from pyneuroml import plot as pyneuroml_plot
 
 import c302
 
-natsort = lambda s: [int(t) if t.isdigit() else t for t in re.split(r"(\d+)", s)]
+
+def natsort(s):
+    return [int(t) if t.isdigit() else t for t in re.split(r"(\d+)", s)]
+
 
 default_figsize = (6.4, 4.8)
 

@@ -8,6 +8,7 @@ import c302
 
 import neuroml.writers as writers
 
+
 def range_incl(start, end):
     return range(start, end + 1)
 

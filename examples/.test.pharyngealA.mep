@@ -1,4 +1,4 @@
-system: Testing a single cell activity
+system: Testing a single cell's activity in the pharyngeal network
 
 experiments:
     TestOneCell:

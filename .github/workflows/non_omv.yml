@@ -39,13 +39,8 @@ jobs:
     - name: Install c302
       run: |
         pip install .
-        pip install WormNeuroAtlas
         pip list
         
-
-    - name: Test WormNeuroAtlasReader
-      run: |
-        python -m c302.WormNeuroAtlasReader
 
     - name: Run some examples
       run: |

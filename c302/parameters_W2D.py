@@ -105,8 +105,6 @@ class ParameterisedModel(c302ModelPrototype):
         return self.neuron_to_neuron_inh_syn
 
 
-
-
 class CellW2D(NonNeuroMLCustomType):
     def __init__(self, id):
         self.id = id

@@ -1,0 +1,6 @@
+system: Testing a single cell's activity in the FW network
+
+experiments:
+    DB1:
+        expected:
+            spike times:  [250.45000000000002, 1044.95, 1844.95]
