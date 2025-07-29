@@ -166,7 +166,7 @@ if __name__ == "__main__":
             "",
             500,
             0.05,
-            "jNeuroML_NEURON",
+            "jNeuroML",
             data_reader=c302.FW_DATA_READER,
             save=True,
             show_plot_already=True,
