@@ -1,5 +1,3 @@
-import logging
-
 from c302.ConnectomeReader import ConnectionInfo
 from c302.ConnectomeReader import analyse_connections
 from c302 import print_
@@ -15,8 +13,6 @@ import wormneuroatlas as wa
 #    be used to get connection data for c302
 
 ############################################################
-
-LOGGER = logging.getLogger(__name__)
 
 
 class WormNeuroAtlasReader(object):
