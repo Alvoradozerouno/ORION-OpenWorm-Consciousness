@@ -399,6 +399,7 @@ if __name__ == "__main__":
                 ("Full", 1000),
             ]
         )
+        """("FW", 2000),"""
 
         """durations = OrderedDict([('IClamp',1000),
                                 ('Syns',500),
