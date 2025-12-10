@@ -8,7 +8,9 @@ import c302
 
 import neuroml.writers as writers
 
-range_incl = lambda start, end: range(start, end + 1)
+
+def range_incl(start, end):
+    return range(start, end + 1)
 
 
 def setup(
@@ -28,20 +30,11 @@ def setup(
     )
     params = ParameterisedModel()
 
-    params.set_bioparameter(
-        "unphysiological_offset_current", "0pA", "Testing TapWithdrawal", "0"
-    )
-    params.set_bioparameter(
-        "unphysiological_offset_current_del", "0 ms", "Testing TapWithdrawal", "0"
-    )
-    params.set_bioparameter(
-        "unphysiological_offset_current_dur", "2000 ms", "Testing TapWithdrawal", "0"
-    )
-
     """
     VA_motors = ["VA%s" % c for c in range_incl(1, 12)]
     DA_motors = ["DA%s" % c for c in range_incl(1, 9)]
     AS_motors = ["AS%s" % c for c in range_incl(1, 11)]"""
+
     VB_motors = ["VB%s" % c for c in range_incl(1, 11)]
     DB_motors = ["DB%s" % c for c in range_incl(1, 7)]
     DD_motors = ["DD%s" % c for c in range_incl(1, 6)]
@@ -49,7 +42,7 @@ def setup(
 
     cells = list(["AVBL", "AVBR"] + DB_motors + VD_motors + VB_motors + DD_motors)
 
-    muscles_to_include = True
+    muscles_to_include = True  # True to include all muscles
 
     cells_to_stimulate = []
 

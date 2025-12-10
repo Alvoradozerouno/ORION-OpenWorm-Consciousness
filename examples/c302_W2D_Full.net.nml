@@ -18,6 +18,7 @@ Parameters and setting used to generate this network:
 
     Known BioParameters:
         BioParameter: initial_memb_pot = -45 mV (SRC: BlindGuess, certainty 0.1)
+        BioParameter: muscle_to_muscle_elec_syn_gbase = 1 nS (SRC: BlindGuess, certainty 0.1)
         BioParameter: neuron_to_muscle_elec_syn_gbase = 1 nS (SRC: BlindGuess, certainty 0.1)
         BioParameter: neuron_to_neuron_elec_syn_gbase = 1 nS (SRC: BlindGuess, certainty 0.1)
         BioParameter: unphysiological_offset_current = 5pA (SRC: Testing Full net, certainty 0)

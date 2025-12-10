@@ -198,8 +198,11 @@ class c302ModelPrototype(ParameterisedModelPrototype):
 
         return prototype_syn
 
+    def is_nonneuroml_conn(self, syn):
+        return isinstance(syn, NonNeuroMLCustomType)
+
     def is_analog_conn(self, syn):
-        return isinstance(syn, GradedSynapse) or isinstance(syn, NonNeuroMLCustomType)
+        return isinstance(syn, GradedSynapse)
 
     def is_elec_conn(self, syn):
         return isinstance(syn, GapJunction)

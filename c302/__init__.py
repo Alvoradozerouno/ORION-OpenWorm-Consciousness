@@ -100,7 +100,6 @@ def load_data_reader(data_reader):
     Returns:
         reader (obj): The data reader object
     """
-    # return importlib.import_module("c302.%s" % data_reader)
     if "cect" in data_reader:
         dr = importlib.import_module("%s" % data_reader)
         return dr.get_instance()
@@ -108,7 +107,7 @@ def load_data_reader(data_reader):
         return importlib.import_module("c302.%s" % data_reader)
 
 
-def get_str_from_expnotation(num):
+def get_str_from_exponential(num):
     """
     Returns a formatted string representing a floating point number, e.g. 1*0.00001 would result into 1e-05. Returning 0.00001.
     Args:
@@ -122,7 +121,7 @@ def get_str_from_expnotation(num):
 def get_muscle_position(muscle, data_reader):
     if muscle == "MANAL" or muscle == "MVULVA":
         return 0, 0, 0
-    # TODO: Pull these positions from openworm/owmeta-data
+
     pat1 = r"M([VD])([LR])(\d+)"
     pat2 = r"([VD])([LR])(\d+)"
     md = re.fullmatch(pat1, muscle)
@@ -151,7 +150,7 @@ def process_args():
     """
     parser = argparse.ArgumentParser(
         "c302",
-        description="A script which can generate NeuroML2 compliant networks based on the C elegans connectome, along with LEMS files to run them",
+        description="A script which can generate NeuroML2 compliant networks based on the C. elegans connectome, along with LEMS files to run them",
     )
 
     parser.add_argument(
@@ -165,7 +164,7 @@ def process_args():
         "parameters",
         type=str,
         metavar="<parameters>",
-        help="Set of biophysical parametes to use, e.g. parameters_A",
+        help="Set of biophysical parameters to use, e.g. parameters_A",
     )
 
     parser.add_argument(
@@ -173,7 +172,8 @@ def process_args():
         type=str,
         metavar="<data-reader>",
         default=DEFAULT_DATA_READER,
-        help="Use a specific data reader. (default: %s)" % DEFAULT_DATA_READER,
+        help="Use a specific data reader. These now come from the C. elegans Connectome Toolbox, cect (default: %s)"
+        % DEFAULT_DATA_READER,
     )
 
     parser.add_argument(
@@ -221,7 +221,7 @@ def process_args():
         type=str,
         metavar="<param-override>",
         default=None,
-        help='Map of parameters to override, e.g. {"unphysiological_offset_current":"2pA", ...} => use 2pA for additional offset currnet',
+        help='Map of parameters to override, e.g. {"unphysiological_offset_current":"2pA", ...} => use 2pA for additional offset current',
     )
 
     parser.add_argument(
@@ -1163,6 +1163,7 @@ def generate(
 
             elect_conn = False
             analog_conn = False
+            nonneuroml_conn = False
 
             conn_type = "neuron_to_neuron"
             conn_pol = "exc"
@@ -1275,6 +1276,11 @@ def generate(
                 if len(nml_doc.silent_synapses) == 0:
                     nml_doc.silent_synapses.append(SilentSynapse(id="silent"))
 
+            if params.is_nonneuroml_conn(syn0):
+                nonneuroml_conn = True
+                if len(nml_doc.silent_synapses) == 0:
+                    nml_doc.silent_synapses.append(SilentSynapse(id="silent"))
+
             number_syns = conn.number
 
             if params.get_bioparameter(
@@ -1317,17 +1323,30 @@ def generate(
                 print "%s %s num:%s" % (conn_shorthand, orig_pol, number_syns)"""
 
             if number_syns != conn.number:
+                print_(
+                    ">> Changing number of effective synapses connection %s -> %s: was: %s, becomes %s (analog: %s, elect: %s)"
+                    % (
+                        conn.pre_cell,
+                        conn.post_cell,
+                        conn.number,
+                        number_syns,
+                        analog_conn,
+                        elect_conn,
+                    )
+                )
                 if analog_conn or elect_conn:
                     magnitude, unit = c302.bioparameters.split_neuroml_quantity(
                         syn0.conductance
                     )
+                elif nonneuroml_conn:
+                    magnitude, unit = 1, None
                 else:
                     magnitude, unit = c302.bioparameters.split_neuroml_quantity(
                         syn0.gbase
                     )
                 cond0 = "%s%s" % (magnitude * conn.number, unit)
                 cond1 = "%s%s" % (
-                    get_str_from_expnotation(magnitude * number_syns),
+                    get_str_from_exponential(magnitude * number_syns),
                     unit,
                 )
                 gj = "" if not elect_conn else " GapJunction"
@@ -1379,7 +1398,7 @@ def generate(
 
                 proj0.electrical_connection_instance_ws.append(conn0)
 
-            elif analog_conn:
+            elif analog_conn or nonneuroml_conn:
                 proj0 = ContinuousProjection(
                     id=proj_id,
                     presynaptic_population=conn.pre_cell,
@@ -1444,6 +1463,7 @@ def generate(
 
             elect_conn = False
             analog_conn = False
+            nonneuroml_conn = False
 
             conn_type = "neuron_to_muscle"
             if conn.pre_cell in muscles_to_include:
@@ -1558,6 +1578,11 @@ def generate(
                 if len(nml_doc.silent_synapses) == 0:
                     nml_doc.silent_synapses.append(SilentSynapse(id="silent"))
 
+            if params.is_nonneuroml_conn(syn0):
+                nonneuroml_conn = True
+                if len(nml_doc.silent_synapses) == 0:
+                    nml_doc.silent_synapses.append(SilentSynapse(id="silent"))
+
             number_syns = conn.number
 
             if params.get_bioparameter(
@@ -1600,13 +1625,15 @@ def generate(
                     magnitude, unit = c302.bioparameters.split_neuroml_quantity(
                         syn0.conductance
                     )
+                elif nonneuroml_conn:
+                    magnitude, unit = 1, None
                 else:
                     magnitude, unit = c302.bioparameters.split_neuroml_quantity(
                         syn0.gbase
                     )
                 cond0 = "%s%s" % (magnitude * conn.number, unit)
                 cond1 = "%s%s" % (
-                    get_str_from_expnotation(magnitude * number_syns),
+                    get_str_from_exponential(magnitude * number_syns),
                     unit,
                 )
                 gj = "" if not elect_conn else " GapJunction"
@@ -1653,7 +1680,7 @@ def generate(
 
                 proj0.electrical_connection_instance_ws.append(conn0)
 
-            elif analog_conn:
+            elif analog_conn or nonneuroml_conn:
                 proj0 = ContinuousProjection(
                     id=proj_id,
                     presynaptic_population=conn.pre_cell,
