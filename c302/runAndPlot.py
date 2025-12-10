@@ -164,9 +164,9 @@ if __name__ == "__main__":
             "FW",
             "C2",
             "",
-            500,
+            2000,
             0.05,
-            "jNeuroML_NEURON",
+            "jNeuroML",
             data_reader=c302.FW_DATA_READER,
             save=True,
             show_plot_already=True,
@@ -177,7 +177,7 @@ if __name__ == "__main__":
             "FW",
             "W2D",
             "",
-            50,
+            2000,
             0.05,
             "jNeuroML",
             data_reader=c302.FW_DATA_READER,
@@ -235,6 +235,9 @@ if __name__ == "__main__":
 
     elif "-musclesD1" in sys.argv or "-muscD1" in sys.argv:
         run_c302("Muscles", "D1", "", 2000, 0.05, "jNeuroML_NEURON")
+
+    elif "-musclesW2D" in sys.argv or "-muscW2D" in sys.argv:
+        run_c302("Muscles", "W2D", "", 100, 0.05, "jNeuroML")
 
     elif "-pharA" in sys.argv or "-pharyngealA" in sys.argv:
         run_c302("Pharyngeal", "A", "", 500, 0.01, "jNeuroML_NEURON")
@@ -299,6 +302,9 @@ if __name__ == "__main__":
     elif "-socialC1" in sys.argv:
         run_c302("Social", "C1", "", 2500, 0.05, "jNeuroML_NEURON")
 
+    elif "-socialW2D" in sys.argv:
+        run_c302("Social", "W2D", "", 2500, 0.05, "jNeuroML")
+
     elif "-oscA" in sys.argv:
         run_c302("Oscillator", "A", "", 600, 0.05, "jNeuroML_NEURON")
 
@@ -335,7 +341,18 @@ if __name__ == "__main__":
             "",
             500,
             0.05,
-            "jNeuroML_NEURON",
+            "jNeuroML",
+            data_reader="UpdatedSpreadsheetDataReader",
+        )
+
+    elif "-twC2" in sys.argv:
+        run_c302(
+            "TapWithdrawal",
+            "C2",
+            "",
+            500,
+            0.05,
+            "jNeuroML",
             data_reader="UpdatedSpreadsheetDataReader",
         )
 
@@ -391,8 +408,10 @@ if __name__ == "__main__":
                 ("Oscillator", 1000),
                 ("Muscles", 1000),
                 ("Full", 1000),
+                ("FW", 2000),
             ]
         )
+        """("FW", 2000),"""
 
         """durations = OrderedDict([('IClamp',1000),
                                 ('Syns',500),

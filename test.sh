@@ -1,6 +1,7 @@
 set -ex
 
-ruff format *.py */*.py */*/*.py
+ruff format *.py c302/*.py examples/*/*.py
+ruff check  *.py c302/*.py examples/*/*.py
 
 pip install .
 
@@ -167,6 +168,12 @@ cd ../..
 python -m c302.runAndPlot -test # run: python -m c302.runAndPlot -all, to regenerate all images in examples/summary/images/
 
 python -m c302.c302_utils -nogui
+
+cd examples
+
+rm -rf x86_64 arm64 *.hoc *.mod *.dat *_nrn.py 
+
+omv all -V 
 
 echo
 echo "  Successfully completed all c302 tests!"

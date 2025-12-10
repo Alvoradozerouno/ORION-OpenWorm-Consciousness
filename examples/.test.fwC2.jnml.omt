@@ -1,0 +1,20 @@
+# Framework for running automated tests on Open Source Brain
+# See https://github.com/OpenSourceBrain/osb-model-validation for more details
+ 
+target: LEMS_c302_C2_FW.xml 
+engine: jNeuroML
+mep: .test.fwC2.mep
+experiments:
+  DB1:
+    observables:
+      spike times:
+        file: 
+          path: c302_C2_FW.dat
+          columns: [0,3]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 0.00019964064683562766
+
+

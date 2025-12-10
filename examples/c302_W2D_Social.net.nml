@@ -5,7 +5,7 @@ Parameters and setting used to generate this network:
 
     Data reader:                    cect.SpreadsheetDataReader
     c302 version:                   0.11.0
-    cect version:                   0.2.5
+    cect version:                   0.2.6
     owmeta version:                 - not installed -
     owmeta_core version:            - not installed -
     Cells:                          ['RMGR', 'ASHR', 'ASKR', 'AWBR', 'IL2R', 'RMHR', 'URXR']
@@ -18,6 +18,7 @@ Parameters and setting used to generate this network:
 
     Known BioParameters:
         BioParameter: initial_memb_pot = -45 mV (SRC: BlindGuess, certainty 0.1)
+        BioParameter: muscle_to_muscle_elec_syn_gbase = 1 nS (SRC: BlindGuess, certainty 0.1)
         BioParameter: neuron_to_muscle_elec_syn_gbase = 1 nS (SRC: BlindGuess, certainty 0.1)
         BioParameter: neuron_to_neuron_elec_syn_gbase = 1 nS (SRC: BlindGuess, certainty 0.1)
         BioParameter: unphysiological_offset_current = 0 pA (SRC: KnownError, certainty 0)
