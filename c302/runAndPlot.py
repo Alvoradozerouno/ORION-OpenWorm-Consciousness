@@ -341,7 +341,18 @@ if __name__ == "__main__":
             "",
             500,
             0.05,
-            "jNeuroML_NEURON",
+            "jNeuroML",
+            data_reader="UpdatedSpreadsheetDataReader",
+        )
+
+    elif "-twC2" in sys.argv:
+        run_c302(
+            "TapWithdrawal",
+            "C2",
+            "",
+            500,
+            0.05,
+            "jNeuroML",
             data_reader="UpdatedSpreadsheetDataReader",
         )
 
@@ -397,6 +408,7 @@ if __name__ == "__main__":
                 ("Oscillator", 1000),
                 ("Muscles", 1000),
                 ("Full", 1000),
+                ("FW", 2000),
             ]
         )
         """("FW", 2000),"""
