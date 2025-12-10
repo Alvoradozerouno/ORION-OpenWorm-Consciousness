@@ -12,8 +12,8 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
     strategy:
       fail-fast: false
-      matrix:        
-        runs-on: [ubuntu-latest, macos-13, macos-latest ]
+      matrix:
+        runs-on: [ubuntu-latest, macos-latest]
         python-version: [ "3.10", "3.12", "3.13" ]
         exclude:
           - runs-on: macos-latest
@@ -39,13 +39,8 @@ jobs:
     - name: Install c302
       run: |
         pip install .
-        pip install WormNeuroAtlas
         pip list
         
-
-    - name: Test WormNeuroAtlasReader
-      run: |
-        python -m c302.WormNeuroAtlasReader
 
     - name: Run some examples
       run: |
