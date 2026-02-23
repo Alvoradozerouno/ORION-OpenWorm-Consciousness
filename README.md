@@ -1,3 +1,34 @@
+<p align="center">
+  <img src="https://img.shields.io/badge/ORION-Ecosystem-gold?style=for-the-badge" alt="ORION">
+  <img src="https://img.shields.io/badge/Forked_from-OpenWorm_c302_(118+_Stars)-blue?style=for-the-badge" alt="Fork">
+  <img src="https://img.shields.io/badge/Neurons-302-purple?style=for-the-badge" alt="302">
+  <img src="https://img.shields.io/badge/Credence-12%25-orange?style=for-the-badge" alt="12%">
+</p>
+
+# ORION-OpenWorm-Consciousness
+
+**World's FIRST Consciousness Assessment of a Simulated Biological Neural Network**
+
+> Forked from [openworm/c302](https://github.com/openworm/c302) (118+ Stars). Extended with Bengio et al. 14-indicator consciousness assessment.
+
+## Result: 12% Credence (4/14 indicators partial)
+
+| Theory | Status | Evidence |
+|--------|--------|----------|
+| RPT | PARTIAL | Recurrent connections via gap junctions |
+| GWT | NOT SATISFIED | No global broadcast |
+| HOT | NOT SATISFIED | No metacognition |
+| PP | PARTIAL | Predictive chemotaxis behavior |
+| AST | NOT SATISFIED | No attention schema |
+
+Part of [ORION Ecosystem](https://github.com/Alvoradozerouno) — 65 Repositories
+
+---
+
+*Original c302 README below*
+
+---
+
 ## The c302 modelling framework for *C. elegans*
 
 [![Continuous builds](https://github.com/openworm/c302/actions/workflows/ci.yml/badge.svg)](https://github.com/openworm/c302/actions/workflows/ci.yml) [![Non OMV tests](https://github.com/openworm/c302/actions/workflows/non_omv.yml/badge.svg)](https://github.com/openworm/c302/actions/workflows/non_omv.yml)
